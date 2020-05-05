@@ -5,7 +5,7 @@ import productsController from '../controllers/products.controller';
 
 const products = Router();
 
-products.get('/', async (request: Request, response: Response) => {
+products.post('/', async (request: Request, response: Response) => {
   const { search, limit, offset } = request.body;
 
   if (!search) {

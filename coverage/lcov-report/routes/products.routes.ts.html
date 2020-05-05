@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for routes/health.routes.ts</title>
+    <title>Code coverage report for routes/products.routes.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">routes</a> health.routes.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">routes</a> products.routes.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.86% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/14</span>
+                <span class='fraction'>17/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.67% </span>
+                <span class="strong">93.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/12</span>
+                <span class='fraction'>14/15</span>
             </div>
         
             
@@ -85,68 +85,62 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Router, Request, Response } from 'express';
 import pingServerHelper from '../helpers/pingServer.helper';
-import { resolve } from 'path';
+import AppGlobalError from '../helpers/AppGlobalError.helper';
+import productsController from '../controllers/products.controller';
 &nbsp;
-import dotenv from 'dotenv';
+const products = Router();
 &nbsp;
-dotenv.config({ path: resolve('env', `.env.${process.env.NODE_ENV}`) });
+products.post('/', async (request: Request, response: Response) =&gt; {
+  const { search, limit, offset } = request.body;
 &nbsp;
-const healthRoutes = Router();
-&nbsp;
-const appPort = process.env.APP_PORT;
-&nbsp;
-healthRoutes.get('/', async (_: Request, response: Response) =&gt; {
-  let responseTestConnection;
-&nbsp;
-  try {
-    responseTestConnection = await pingServerHelper.ping(
-      'http://mercadolivre.com.br',
-    );
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    responseTestConnection = error;</span>
-  } finally {
-    response.json({
-      mercadoLivreConnection: responseTestConnection,
-      message: `Server started on port ${appPort} in ${process.env.NODE_ENV} mode`,
-    });
+  if (!search) {
+    throw new AppGlobalError('search is required');
   }
+&nbsp;
+  const responseTestConnection = await pingServerHelper.ping(
+    'https://lista.mercadolivre.com.br/',
+  );
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (responseTestConnection.statusCode !== 200) {
+<span class="cstat-no" title="statement not covered" >    throw new AppGlobalError('could not connect to Mercado Livre', 503);</span>
+  }
+&nbsp;
+  const products = await productsController.index({ search, limit, offset });
+&nbsp;
+  return response.json(products);
 });
 &nbsp;
-export default healthRoutes;
+export default products;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

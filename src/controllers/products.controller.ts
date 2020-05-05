@@ -1,4 +1,4 @@
-import MercadoLivreCrawlerService from '../services/Service.service';
+import MercadoLivreCrawlerService from '../services/MercadoLivreCrawler.service';
 
 interface RequestIndex {
   search: string;
@@ -6,10 +6,18 @@ interface RequestIndex {
   offset?: number;
 }
 
+interface Product {
+  name: string;
+  link?: string;
+  price: string;
+  store?: string;
+  state?: string;
+}
+
 interface ResponseProducts {
   count: number;
   offset: number;
-  rows: [];
+  rows: Product[];
 }
 
 class ProductsController {
@@ -39,5 +47,4 @@ class ProductsController {
     return response;
   }
 }
-
 export default new ProductsController();
