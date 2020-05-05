@@ -1,5 +1,4 @@
-import MercadoLivreCrawler from '../services/MercadoLivreCrawler.service';
-import MercadoLivreCrawlerService from '../services/MercadoLivreCrawler.service';
+import MercadoLivreCrawlerService from '../services/Service.service';
 
 interface RequestIndex {
   search: string;
@@ -14,17 +13,17 @@ interface ResponseProducts {
 }
 
 class ProductsController {
-  private mercadoLivreCrawlerService: MercadoLivreCrawler;
+  private mercadoLivreCrawlerService: MercadoLivreCrawlerService;
 
   constructor() {
-    this.mercadoLivreCrawlerService = new MercadoLivreCrawler();
+    this.mercadoLivreCrawlerService = new MercadoLivreCrawlerService();
   }
 
   public async index({
     search,
     limit,
     offset,
-  }: RequestIndex): ResponseProducts {
+  }: RequestIndex): Promise<ResponseProducts> {
     const products = await this.mercadoLivreCrawlerService.listProducts({
       search,
       limit,
@@ -33,12 +32,11 @@ class ProductsController {
 
     const response = {
       rows: products,
-      count: products.length,,
+      count: products.length,
       offset: offset || 0,
     };
 
     return response;
-    ""
   }
 }
 
