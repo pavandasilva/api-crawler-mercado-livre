@@ -28,7 +28,7 @@ git clone https://github.com/pavandasilva/api-crawler-mercado-livre.git
 
 ### Configurando
 
-Crie o arquivo env.development dentro da pasta .env e preecha-o com as configurações necessárias usando .env.example como exemplo.
+Crie o arquivo .env.development dentro da pasta .env e preecha-o com as configurações necessárias usando .env.example como exemplo.
 
 Execute os seguintes comandos:
 
