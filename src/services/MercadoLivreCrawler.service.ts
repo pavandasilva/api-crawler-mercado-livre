@@ -54,8 +54,9 @@ class MercadoLivreCrawlerService {
             retorna a lista de produtos quando a lista estiver 
             com o número limite igual ao definido na busca
           */
+          let countProducts = this.countProducts();
 
-          if (this.countProducts() >= limit) {
+          if (countProducts >= limit) {
             const products: Product[] = this.getProducts();
             resolve(products);
             return false;
