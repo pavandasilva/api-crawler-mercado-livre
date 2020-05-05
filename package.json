@@ -5,19 +5,29 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "NODE_ENV=development ts-node-dev src/server.ts --transpileOnly --ignore-watch node_modules",
-    "test": "jest"
+    "dev": "NODE_ENV=development ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts ",
+    "test": "jest",
+    "debug:test": "node  --inspect ./node_modules/jest/bin/jest -i"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cheerio": "^0.22.18",
     "@types/express": "^4.17.6",
+    "@types/supertest": "^2.0.9",
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "crawler": "^1.2.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.88.2",
+    "supertest": "^4.0.2",
     "ts-jest": "^25.4.0"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
+    "@types/request": "^2.48.4",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "eslint": "^6.8.0",
