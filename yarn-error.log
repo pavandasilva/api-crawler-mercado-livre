@@ -1,5 +1,5 @@
 Arguments: 
-  /home/rogerio/.nvm/versions/node/v12.16.2/bin/node /usr/share/yarn/bin/yarn.js add @types/crawler
+  /home/rogerio/.nvm/versions/node/v12.16.2/bin/node /usr/share/yarn/bin/yarn.js add @types/http
 
 PATH: 
   /home/rogerio/.nvm/versions/node/v12.16.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fcrawler: Not found
+  Error: https://registry.yarnpkg.com/@types%2fhttp: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66987:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:310:20)
@@ -34,7 +34,11 @@ npm manifest:
     "license": "MIT",
     "scripts": {
       "build": "tsc",
-      "dev": "NODE_ENV=development ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts ",
+      "server:dev": "NODE_ENV=development ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts ",
+      "preserver:prod": "tsc",
+      "server:prod": "pm2 start pm2.json --env production",
+      "preserver:stag": "tsc",
+      "server:stag": "pm2 start pm2.json --env staging",
       "test": "jest",
       "debug:test": "node  --inspect ./node_modules/jest/bin/jest -i"
     },
