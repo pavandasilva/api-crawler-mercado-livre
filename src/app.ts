@@ -9,6 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
+app.use('/', express.static('documentation'));
+
+if (process.env.NODE_ENV === 'development')
+  app.use('/coverage', express.static('coverage/lcov-report'));
+
 app.use(
   (error: Error, request: Request, response: Response, _: NextFunction) => {
     if (error instanceof AppGlobalErrorHelper) {
