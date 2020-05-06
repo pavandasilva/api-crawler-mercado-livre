@@ -1,19 +1,13 @@
-import express from 'express';
 import dotenv from 'dotenv';
+import app from './app';
 import { resolve } from 'path';
 
-import routes from './routes';
+const http = require('http');
+
+const server = http.createServer(app);
 
 dotenv.config({ path: resolve('env', `.env.${process.env.NODE_ENV}`) });
 
-const app = express();
-const appPort = process.env.APP_PORT;
-
-app.use(express.json());
-app.use(routes);
-
-app.listen(appPort, () => {
-  console.log(
-    `Server started on port ${appPort} in ${process.env.NODE_ENV} mode`,
-  );
+server.listen(process.env.APP_PORT, () => {
+  console.log(`Application running on port ${process.env.APP_PORT}`);
 });

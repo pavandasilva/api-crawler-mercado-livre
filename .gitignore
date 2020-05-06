@@ -5,3 +5,6 @@
 
 #modules
 node_modules
+
+#dist
+/dist
