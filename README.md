@@ -40,7 +40,7 @@ Execute os seguintes comandos:
 ### Rodando em ambiente de desenvolvimento
 
 ```
-> yarn dev
+> yarn server:dev
 ```
 
 ### Rodando os teste automatizados
