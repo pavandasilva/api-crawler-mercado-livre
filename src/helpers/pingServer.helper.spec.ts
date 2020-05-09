@@ -25,9 +25,11 @@ describe('TestConnectionHelper', () => {
     expect(response.ping).toBeDefined();
   });
 
-  /* it('should return error', async () => {
-    const response = await pingServer.ping('http://www');
-
-    expect(typeof response).toBe('string');
-  }); */
+  it('should return error', async () => {
+    try {
+      await pingServer.ping('http://www');
+    } catch (err) {
+      expect(err).not.toBe(null);
+    }
+  });
 });
